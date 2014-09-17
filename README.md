@@ -36,6 +36,9 @@ var Infinity = require('react-infinity');
   })
 //...
 
+
+```
+
 The props are fairly straightforward.
 
 **data** *array*
