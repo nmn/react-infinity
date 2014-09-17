@@ -1,0 +1,36 @@
+{
+  "name": "react-infinity",
+  "version": "0.0.1",
+  "description": "an implementation of the UITableView from iOS for the web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naman34/react-infinity.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "infinity",
+    "famo.us",
+    "famous",
+    "animation",
+    "UI",
+    "UITableView",
+    "TableView",
+    "culling",
+    "memory"
+  ],
+  "author": "Naman Goel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/naman34/react-infinity/issues"
+  },
+  "homepage": "https://github.com/naman34/react-infinity",
+  "dependencies": {
+    "famous": "^0.2.2",
+    "react-prefixr": "0.0.3"
+  }
+}
