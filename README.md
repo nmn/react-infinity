@@ -1,4 +1,4 @@
-![React Infinity](http://naman.s3.amazonaws.com/react-infinity/react-infinity.png)
+![React Infinity](http://naman.s3.amazonaws.com/react-infinity/react-infinity-2.png)
 
 React Infinity is an implementation of the UITableView from iOS for the web. 
 (Another famous implementation is [Infinity.js](http://airbnb.github.io/infinity/) by AirBnB.)
