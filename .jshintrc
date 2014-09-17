@@ -1,0 +1,8 @@
+{
+  "node" : true,
+  "newcap": false,
+  "esnext": true,
+  "eqeqeq": true,
+  "globalstrict": true,
+  "noyield": true
+}
