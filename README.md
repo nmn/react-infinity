@@ -32,7 +32,7 @@ var Infinity = require('react-infinity');
     elementHeight: 300,
     margin: 300,
     childComponent: ArticleCard,
-    scrollTop: el
+    transitionableName: el
   })
 //...
 
@@ -42,25 +42,33 @@ var Infinity = require('react-infinity');
 The props are fairly straightforward.
 
 **data** *array*
+
 This is the data on which the content is based. It should be an array of objects that can have any data that your application may require and will be passed in to the childComponent that you pass in to render.
 
 The only manadatory property of each object in data is an id field which is unique.
 
 **elementWidth** *number*
+
 Width of each element in pixels
 
 **elementHeight** *number*
+
 Height of each element in pixels
 
 **margin** *number*
+
 margin between the elements
 
 **childComponent** *React Component*
+
 This is the react component that is responsible for rendering each object in the data array. This can be any component and will receive the data you pass in. You are responsible for making sure that it renders in way that it conforms to size you have provided.
 
-**scrollTop** *DOM element* *React Element* *Transitionable*
-This is important to get the scroll position of the containing element. This could be the `window` object, or any other DOM element whose scroll position can be tracked to render the correct elements of the collection.
-It can also be a famo.us transitionable. This way you can use custom scrolling libraries on touch screens like scrollability or iscroll and provide the scrollTop data even though no actual element is actually scrolling.
+**transitionableName** *string*
+
+As a temporary measure, you must create a transitionable by using the provided TransitionableBank, and pass it's name. You must then keep the value of the transitionable up-to date with the correct scrollTop value in pixels. The component will pull the correct transitionable from the Transitionable Bank, and do the rest. This will soon be replaced with a scrollTop property that will accept a whole range of different types of values:
+
+(This is important to get the scroll position of the containing element. This could be the `window` object, or any other DOM element whose scroll position can be tracked to render the correct elements of the collection.
+It can also be a famo.us transitionable. This way you can use custom scrolling libraries on touch screens like scrollability or iscroll and provide the scrollTop data even though no actual element is actually scrolling.)
 
 There are more properties that you can pass in to customize the behaviour, such as a different size options for a mobile view and what the break point of that should be. Also, you can change the default behaviour from a vertical to horizontal scroll. Those properties are currently in flux and will be added soon in the future. Complete API and code examples will be added soon.
 
