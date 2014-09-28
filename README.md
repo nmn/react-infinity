@@ -79,7 +79,7 @@ There will soon be a fully customisable example to let you experience the power 
 
 ## Support
 
-React Infinity is in active development and is being dogfooded at [Rushmore.fm](https://rushmore.fm). The project will be using the same version of React Infinity as on react, and bugs will be fixed promptly and performance imporvements will land early.
+React Infinity is in active development and is being dogfooded at [Rushmore.fm](https://rushmore.fm). The project will be using the same version of React Infinity as on react, and bugs will be fixed promptly and performance improvements will land early.
 
 On the other hand, React Infinity does some things well, and lets you take care of the other things. If you run in to a problem where you're not being able to accomplish something with React-Infinity that you want to, I may be able to let you know of a way. But some things may simply not be possible, such as a masonry layout.
 
