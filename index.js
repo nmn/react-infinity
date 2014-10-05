@@ -7,46 +7,7 @@ var TransitionGroup = React.addons.TransitionGroup;
 var Transitionable = require('./TransitionableBank');
 var RAFList = require('./RAFList');
 
-var SubContainer = React.createClass({
-  displayName: 'React-Infinity',
-  getInitialState: function () {
-    return {
-      transform: this.props.transform + ' scale(1)',
-      opacity: '0'
-    };
-  },
-  componentDidMount: function (argument) {
-    this.setState({transform: this.props.transform + ' scale(1)', opacity: '1'});
-  },
-  componentWillReceiveProps: function (newProps) {
-    this.setState({transform: newProps.transform + ' scale(1)'});
-  },
-  componentWillEnter: function (cb) {
-    this.setState({transform: this.props.transform + ' scale(1)', opacity: '0'});
-    setTimeout(cb, 100);
-  },
-  componentDidEnter: function () {
-    this.setState({transform: this.props.transform + ' scale(1)', opacity: '1'});
-  },
-  componentWillLeave: function (cb) {
-    this.setState({transform: this.props.transform + ' scale(1)', opacity: '0'});
-    setTimeout(cb, 400);
-  },
-  render: function () {
-    return React.DOM.div({style: s({
-      position: 'absolute',
-      top: '0',
-      left: '0',
-      transform: this.state.transform,
-      width: this.props.width,
-      height: this.props.height,
-      transition: this.props.transition,
-      opacity: this.state.opacity
-    })},
-      this.props.children
-    );
-  }
-});
+var SubContainer = require('./SubContainer');
 
 /*
 - The properties I can expect:
@@ -92,7 +53,8 @@ var Infinite = React.createClass({
       mobileWidth: 480,
       justifyOnMobile: true,
       margin: 0,
-      scrollDelta: 0
+      scrollDelta: 0,
+      direction: 'vertical'
     };
   },
 
@@ -128,18 +90,9 @@ var Infinite = React.createClass({
 
   componentDidMount: function () {
 
-    // this.onResize = this.onResize.bind(this);
-    // this.onScroll = this.onScroll.bind(this);
-
     global.addEventListener('resize', this.onResize);
 
     RAFList.bind(this.onScroll);
-    //this.props.scrollContainer.addEventListener('scroll', this.onScroll);
-
-    // this.props.scrollContainer.addEventListener('touchstart', this.onTouchStart);
-    // this.props.scrollContainer.addEventListener('touchmove', this.onTouchMove);
-    // this.props.scrollContainer.addEventListener('touchend', this.onTouchEnd);
-    // Causes Bad performance for now.
 
     this.setState({
       loaded: true,
@@ -158,7 +111,7 @@ var Infinite = React.createClass({
     // move some logic here for visible element calculation.
 
     // set flag for animation off
-    if(this.state.extra.count % 20 === 0) {
+    if(this.state.extra.count % 5 === 0) {
       var scrollTop = this.state.transitionable.get();
       if(this.state.scrollTop !== scrollTop){
         this.setState({scrollTop: scrollTop});
@@ -168,34 +121,6 @@ var Infinite = React.createClass({
 
   },
 
-  // onTouchStart: function (evt) {
-  //   var startY = evt.touches[0].pageY;
-  //   this.setState({
-  //     startY: startY,
-  //     startScrollTop: this.state.scrollTop
-  //   });
-    
-  // },
-  // onTouchMove: function (evt) {
-
-  //   var newY = evt.touches[0].pageY;
-  //   var delta = this.state.startY - newY;
-
-  //   if(this.state.scrollTop === this.state.startScrollTop){
-  //     this.setState({
-  //       scrollDelta: delta
-  //     });
-  //   }
-    
-  // },
-  // onTouchEnd: function (evt) {
-  //   console.log(":( oh god, no more control!");
-  // },
-
-  // willReceiveProps: function (argument) {
-  //   // set flag for animation on. Filtering content is completely external.
-  // },
-
   onResize: function () {
     this.setState({windowHeight: global.innerHeight, windowWidth: global.innerWidth});
   },
@@ -203,22 +128,9 @@ var Infinite = React.createClass({
   componentWillUnmount: function () {
     global.removeListener('resize', this.onResize);
     RAFList.unbind(this.onScroll);
-    //this.props.scrollContainer.removeEventListener('scroll', this.onResize);
-
-    // this.props.scrollContainer.removeEventListener('touchstart', this.onTouchStart);
-    // this.props.scrollContainer.removeEventListener('touchmove', this.onTouchMove);
-    // this.props.scrollContainer.removeEventListener('touchend', this.onTouchEnd);
   },
 
-  render: function(){
-    if(this.state.loaded === false){
-      return React.DOM.div({className: 'infinite-container', style: {fontSize: '0', position: 'relative', textAlign: this.props.align}},
-        this.props.data.map(function (elementData, i) {
-          return React.DOM[this.props.component]({style: {display: 'inline-block', margin: '32px', verticalAlign: 'top'}}, this.props.childComponent(elementData));
-        }.bind(this))
-      );
-    }
-
+  vertical: function(){
     var windowWidth = this.state.windowWidth;
     var windowHeight = this.state.windowHeight;
 
@@ -267,6 +179,76 @@ var Infinite = React.createClass({
     },
       TransitionGroup(null, elementsToRender)
     );
+  },
+
+  horizontal: function(){
+    var windowWidth = this.state.windowWidth;
+    var windowHeight = this.state.windowHeight;
+
+    var elementWidth = this.props.mobileWidth <= windowWidth ? this.props.elementWidth : this.props.elementMobileWidth;
+    var elementHeight = this.props.mobileWidth <= windowWidth ? this.props.elementHeight : this.props.elementMobileHeight;
+    var margin = this.props.margin;
+
+    if(!!this.props.justifyOnMobile && this.props.mobileWidth > windowWidth) {
+      elementHeight = windowHeight;
+      margin = 0;
+    }
+
+    var elementsPerColumn = Math.max(1, Math.floor((windowHeight - margin) / (elementHeight + margin)));
+    var extraSpace = windowHeight - elementsPerColumn * (elementHeight + margin) + margin;
+    var offset = this.props.align === 'left' ? 0 :
+                 this.props.align === 'center' ? Math.round(extraSpace/2) : extraSpace;
+
+    var scrollLeft = this.state.scrollTop + this.state.scrollDelta;
+    var columnsToLeft = Math.floor((scrollLeft - margin) / (elementHeight + margin));
+    var visibleColumns = Math.ceil(((columnsToLeft * (elementWidth + margin)) + windowWidth)/(elementWidth + margin));
+
+    var extra = elementsPerColumn === 1 ? Math.ceil(visibleColumns/2) : 2;
+    var lowerLimit = (columnsToLeft - extra) * elementsPerColumn;
+    var higherLimit = (visibleColumns + extra * 2) * elementsPerColumn;
+
+    var elementsToRender = [];
+
+    this.props.data.forEach(function (obj, index) {
+      if(index >= lowerLimit && index < higherLimit){
+        var row = index % elementsPerColumn;
+        var column = Math.floor(index / elementsPerColumn);
+        elementsToRender.push(SubContainer({
+          key: obj.id || obj._id,
+          transform: 'translate('+ (offset + column * (elementWidth + margin))  +'px, '+ (margin + row * (elementHeight + margin)) +'px)',
+          width: elementWidth + 'px',
+          height: elementHeight + 'px',
+          transition: this.props.transition
+        }, this.props.childComponent(obj)));
+      }
+    }.bind(this));
+
+    return React.DOM.div({className: 'infinite-container', style: {
+      height: (margin + (elementHeight + margin) * Math.ceil(this.props.data.length/elementsPerColumn)) + 'px',
+      width: '100%',
+      position: 'relative'}
+    },
+      TransitionGroup(null, elementsToRender)
+    );
+  },
+
+  render: function(){
+    if(this.state.loaded === false){
+      return React.DOM.div({className: 'infinite-container', style: {fontSize: '0', position: 'relative', textAlign: this.props.align}},
+        this.props.data.map(function (elementData, i) {
+          return React.DOM[this.props.component]({style: {display: 'inline-block', margin: '32px', verticalAlign: 'top'}}, this.props.childComponent(elementData));
+        }.bind(this))
+      );
+    }
+
+    if(this.props.direction === 'horizontal') {
+      return this.horizontal();
+    } else if(this.props.direction === 'vertical') {
+      return this.vertical();
+    } else {
+      console.warn('the prop `direction` must be either "vertical" or "horizontal". It is set to', this.props.direction);
+      return this.vertical();
+    }
     
   }
 
