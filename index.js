@@ -50,11 +50,13 @@ var Infinite = React.createClass({
       className: 'infinite-container',
       elementClassName: '',
       component: 'div',
+      containerComponent: 'div',
       mobileWidth: 480,
       justifyOnMobile: true,
       margin: 0,
       scrollDelta: 0,
-      direction: 'vertical'
+      direction: 'vertical',
+      preRender: false
     };
   },
 
@@ -71,7 +73,8 @@ var Infinite = React.createClass({
     elementMobileHeight: React.PropTypes.number,
     elementMobileWidth: React.PropTypes.number,
     margin: React.PropTypes.number,
-    justifyOnMobile: React.PropTypes.bool
+    justifyOnMobile: React.PropTypes.bool,
+    preRender: React.PropTypes.bool
   },
 
   getInitialState: function () {
@@ -126,7 +129,7 @@ var Infinite = React.createClass({
   },
 
   componentWillUnmount: function () {
-    global.removeListener('resize', this.onResize);
+    global.removeEventListener('resize', this.onResize);
     RAFList.unbind(this.onScroll);
   },
 
@@ -172,7 +175,7 @@ var Infinite = React.createClass({
       }
     }.bind(this));
 
-    return React.DOM.div({className: 'infinite-container', style: {
+    return React.createElement(this.props.containerComponent, {className: 'infinite-container', style: {
       height: (margin + (elementHeight + margin) * Math.ceil(this.props.data.length/elementsPerRow)) + 'px',
       width: '100%',
       position: 'relative'}
@@ -223,7 +226,7 @@ var Infinite = React.createClass({
       }
     }.bind(this));
 
-    return React.DOM.div({className: 'infinite-container', style: {
+    return React.createElement(this.props.containerComponent, {className: 'infinite-container', style: {
       height: (margin + (elementHeight + margin) * Math.ceil(this.props.data.length/elementsPerColumn)) + 'px',
       width: '100%',
       position: 'relative'}
@@ -234,11 +237,12 @@ var Infinite = React.createClass({
 
   render: function(){
     if(this.state.loaded === false){
-      return React.DOM.div({className: 'infinite-container', style: {fontSize: '0', position: 'relative', textAlign: this.props.align}},
-        this.props.data.map(function (elementData, i) {
-          return React.DOM[this.props.component]({style: {display: 'inline-block', margin: '32px', verticalAlign: 'top'}}, this.props.childComponent(elementData));
-        }.bind(this))
-      );
+      return this.props.preRender
+	      ? React.createElement(this.props.containerComponent, {className: 'infinite-container', style: {fontSize: '0', position: 'relative', textAlign: this.props.align}},
+	          this.props.data.map(function (elementData, i) {
+	          return React.createElement(this.props.component, {style: {display: 'inline-block', margin: '32px', verticalAlign: 'top'}}, React.createElement(this.props.childComponent, elementData));
+	        }.bind(this)))
+	      : null;
     }
 
     if(this.props.direction === 'horizontal') {
