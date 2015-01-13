@@ -96,6 +96,13 @@ The style guide is important, but it's fairly straightforward.
 Also, please feel free to leave issues with questions, bugs, feature requests etc.
 
 
+## Changelog
+
+#### v1.0.0
+- Fixed bug - incorrectly named function for removing event listener
+- Pre-Rendering made an option and turned off by default
+- Option to choose the DOM element for the container
+- Update to React 0.12.x
 
 
 
