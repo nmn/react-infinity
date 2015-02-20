@@ -8,6 +8,8 @@ React Infinity is much more than just infinity.js repackaged for react.js. React
 
 ## Why?
 
+[![Join the chat at https://gitter.im/nmn/react-infinity](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nmn/react-infinity?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Showing extremely long pages with a very large number of elements is becoming increasingly common on the web. However, sometimes with with very large number of elements, performance can suffer. As has been a guiding principle behind React.js, DOM nodes can be extremely expensive and can quickly hurt scroll performance of your page.
 
 UITable on iOS solves this by simply only rendering the elements currently visible on the screen. React Infinity brings that logic the web. This way you can have a huge number of elements with smooth performance without memory issues. This is important to ensure a good experience while scrolling, and this is especially important on mobile devices, where the browser can crash if your website has too many DOM elements.
