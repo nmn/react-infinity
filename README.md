@@ -6,6 +6,25 @@ React Infinity is an implementation of the UITableView from iOS for the web.
 React Infinity is much more than just infinity.js repackaged for react.js. React Infinity has been written from the ground up for React.js with maximum performance and using the TransitionGroup addon, animations for every element coming in, going out, or moving around.
 
 
+# THIS BRANCH IS UNDER-DEVELOPMENT. GO TO THE MASTER BRANCH IF YOU ARE NOT HERE TO CONTRIBUTE
+
+## V2
+
+version 2 of react-infinity is a major update.
+
+Among other things, all animation has been moved from CSS transitions to requestAnimationFrame using a small part of famo.us
+
+As of now, all the new code for v2 is in animagrid.js, the other code is still being develped.
+
+animagrid, seperates the concerns of calculation and animations from the concerns of browser event listening etc. A new wrapper component needs to be built for legacy support.
+
+animagrid is also currently lacking support for conditional rendering of elements or rendering pinterest-like layouts.
+
+Work will continue over the next month or so.
+
+Any contributions in this period will be greatly appreciated.
+
+
 ## Why?
 
 Showing extremely long pages with a very large number of elements is becoming increasingly common on the web. However, sometimes with with very large number of elements, performance can suffer. As has been a guiding principle behind React.js, DOM nodes can be extremely expensive and can quickly hurt scroll performance of your page.
