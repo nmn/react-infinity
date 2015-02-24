@@ -2,7 +2,7 @@ var s = require('react-prefixr');
 var React = require('react/addons');
 
 var SubContainer = React.createClass({
-  displayName: 'React-Infinity',
+  displayName: 'Sub-Infinity',
   getInitialState: function () {
     return {
       transform: this.props.transform + ' scale(1)',

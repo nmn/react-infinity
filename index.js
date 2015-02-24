@@ -40,6 +40,8 @@ xi) classname, elementClassName
 
 var Infinite = React.createClass({
 
+  displayName: 'React-Infinity',
+
   getDefaultProps: function () {
     return {
       data: [],
@@ -79,7 +81,6 @@ var Infinite = React.createClass({
 
   getInitialState: function () {
     return {
-      transitionable: Transitionable(this.props.transitionableName),
       scrollTop: 0,
       windowWidth: this.props.windowWidth || 800,
       windowHeight: this.props.windowHeight || 600,
@@ -103,7 +104,7 @@ var Infinite = React.createClass({
       windowHeight: global.innerHeight,
       elementWidth: this.props.elementWidth || this.refs.element1.getDOMNode().getClientRects()[0].width,
       elementHeight: this.props.elementHeight || this.refs.element1.getDOMNode().getClientRects()[0].height,
-      scrollTop: this.state.transitionable.get()
+      scrollTop: this.props.transitionable && this.props.transitionable.get() || 0
     });
   },
 
@@ -115,7 +116,7 @@ var Infinite = React.createClass({
 
     // set flag for animation off
     if(this.state.extra.count % 5 === 0) {
-      var scrollTop = this.state.transitionable.get();
+      var scrollTop = this.props.transitionable && this.props.transitionable.get() || 0;
       if(this.state.scrollTop !== scrollTop){
         this.setState({scrollTop: scrollTop});
       }
