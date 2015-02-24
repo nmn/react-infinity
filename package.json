@@ -1,6 +1,6 @@
 {
   "name": "react-infinity",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "an implementation of the UITableView from iOS for the web",
   "main": "index.js",
   "scripts": {
