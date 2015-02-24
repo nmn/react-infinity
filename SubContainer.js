@@ -1,4 +1,5 @@
-var React = require('react');
+var s = require('react-prefixr');
+var React = require('react/addons');
 
 var SubContainer = React.createClass({
   displayName: 'React-Infinity',
