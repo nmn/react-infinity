@@ -1,3 +1,5 @@
+var React = require('react');
+
 var SubContainer = React.createClass({
   displayName: 'React-Infinity',
   getInitialState: function () {

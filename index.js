@@ -2,12 +2,12 @@
 
 var s = require('react-prefixr');
 var React = require('react/addons');
-var TransitionGroup = React.addons.TransitionGroup;
+var TransitionGroup = React.createFactory(React.addons.TransitionGroup);
 
 var Transitionable = require('./TransitionableBank');
 var RAFList = require('./RAFList');
 
-var SubContainer = require('./SubContainer');
+var SubContainer = React.createFactory(require('./SubContainer'));
 
 /*
 - The properties I can expect:
