@@ -91,11 +91,13 @@ var Infinite = React.createClass({
   componentDidMount: function () {
 
     global.addEventListener('resize', this.onResize);
-    global.addEventListener('scroll', this.onScroll);
 
-    this.onScroll()
-
-    RAFList.bind(this.onScroll);
+    if(this.props.transitionable){
+      RAFList.bind(this.onScroll);
+    } else {
+      global.addEventListener('scroll', this.onScroll);
+      this.onScroll()
+    }
 
     this.setState({
       loaded: true,
@@ -108,7 +110,8 @@ var Infinite = React.createClass({
   },
 
   onScroll: function () {
-    var scrollTop = global.scrollY;
+    var scrollTop = this.props.transitionable ? this.props.transitionable.get() : global.scrollY;
+
     if(this.state.scrollTop !== scrollTop){
       this.setState({scrollTop: scrollTop});
     }
@@ -120,8 +123,11 @@ var Infinite = React.createClass({
 
   componentWillUnmount: function () {
     global.removeEventListener('resize', this.onResize);
-    global.removeEventListener('scroll', this.onScroll);
-    RAFList.unbind(this.onScroll);
+    if(this.props.transitionable){
+      RAFList.unbind(this.onScroll);
+    } else {
+      global.removeEventListener('scroll', this.onScroll);
+    }
   },
 
   vertical: function(){

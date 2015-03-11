@@ -35,6 +35,7 @@ var Infinity = require('react-infinity');
     margin: 300,
     childComponent: ArticleCard, // React Class that will render actual cards. Must accept one object from the data array as props
     /* optional values:
+    transitionable: // an object of type famous.Transitionable. transitionable.get() will replace window.scrollY
     mobileWidth: // breakpoint for switching to mobile view
     justifyOnMobile: // pass true to switch to a list instead of a grid on mobile.
     elementMobileHeight: // element height to use for mobile view
@@ -98,6 +99,10 @@ Also, please feel free to leave issues with questions, bugs, feature requests et
 
 
 ## Changelog
+
+#### v1.2.1
+- Made transitionable completely optional. Will use window.scrollY by default.
+- Lots of small bug fixes.
 
 #### v1.0.0
 - Fixed bug - incorrectly named function for removing event listener
