@@ -1,10 +1,8 @@
 'use strict';
 
-var s = require('react-prefixr');
 var React = require('react/addons');
 var TransitionGroup = React.createFactory(React.addons.TransitionGroup);
 
-var Transitionable = require('./TransitionableBank');
 var RAFList = require('./RAFList');
 
 var SubContainer = React.createFactory(require('./SubContainer'));
@@ -48,7 +46,6 @@ var Infinite = React.createClass({
       maxColumns: 100,
       align: 'center',
       transition: '0.5s ease',
-      delay: 0,
       className: 'infinite-container',
       elementClassName: '',
       component: 'div',
@@ -67,7 +64,6 @@ var Infinite = React.createClass({
     maxColumns: React.PropTypes.number,
     align: React.PropTypes.string,
     transition: React.PropTypes.string,
-    delay: React.PropTypes.number,
     className: React.PropTypes.string,
     elementHeight: React.PropTypes.number,
     elementWidth: React.PropTypes.number,
@@ -95,6 +91,9 @@ var Infinite = React.createClass({
   componentDidMount: function () {
 
     global.addEventListener('resize', this.onResize);
+    global.addEventListener('scroll', this.onScroll);
+
+    this.onScroll()
 
     RAFList.bind(this.onScroll);
 
@@ -104,25 +103,15 @@ var Infinite = React.createClass({
       windowHeight: global.innerHeight,
       elementWidth: this.props.elementWidth || this.refs.element1.getDOMNode().getClientRects()[0].width,
       elementHeight: this.props.elementHeight || this.refs.element1.getDOMNode().getClientRects()[0].height,
-      scrollTop: this.props.transitionable && this.props.transitionable.get() || 0
+      scrollTop: global.scrollY || 0
     });
   },
 
   onScroll: function () {
-
-    this.state.extra.count++;
-
-    // move some logic here for visible element calculation.
-
-    // set flag for animation off
-    if(this.state.extra.count % 5 === 0) {
-      var scrollTop = this.props.transitionable && this.props.transitionable.get() || 0;
-      if(this.state.scrollTop !== scrollTop){
-        this.setState({scrollTop: scrollTop});
-      }
+    var scrollTop = global.scrollY;
+    if(this.state.scrollTop !== scrollTop){
+      this.setState({scrollTop: scrollTop});
     }
-    
-
   },
 
   onResize: function () {
@@ -131,6 +120,7 @@ var Infinite = React.createClass({
 
   componentWillUnmount: function () {
     global.removeEventListener('resize', this.onResize);
+    global.removeEventListener('scroll', this.onScroll);
     RAFList.unbind(this.onScroll);
   },
 
@@ -152,7 +142,7 @@ var Infinite = React.createClass({
     var offset = this.props.align === 'left' ? 0 :
                  this.props.align === 'center' ? Math.round(extraSpace/2) : extraSpace;
 
-    var scrollTop = this.state.scrollTop + this.state.scrollDelta;
+    var scrollTop = this.state.scrollTop - this.state.scrollDelta;
     var rowsAbove = Math.floor((scrollTop - margin) / (elementHeight + margin));
     var visibleRows = Math.ceil(((rowsAbove * (elementHeight + margin)) + windowHeight)/(elementHeight+margin));
 
@@ -203,7 +193,7 @@ var Infinite = React.createClass({
     var offset = this.props.align === 'left' ? 0 :
                  this.props.align === 'center' ? Math.round(extraSpace/2) : extraSpace;
 
-    var scrollLeft = this.state.scrollTop + this.state.scrollDelta;
+    var scrollLeft = this.state.scrollTop - this.state.scrollDelta;
     var columnsToLeft = Math.floor((scrollLeft - margin) / (elementHeight + margin));
     var visibleColumns = Math.ceil(((columnsToLeft * (elementWidth + margin)) + windowWidth)/(elementWidth + margin));
 

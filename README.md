@@ -29,12 +29,18 @@ The basic props for React Inifinity
 var Infinity = require('react-infinity');
 
 // ...
-  Infinite({data: data,
-    elementWidth: 300,
-    elementHeight: 300,
+  Infinite({data: data, //Array of objects.
+    elementWidth: 300, // Width of one element
+    elementHeight: 300, // height of one element
     margin: 300,
-    childComponent: ArticleCard,
-    transitionableName: el
+    childComponent: ArticleCard, // React Class that will render actual cards. Must accept one object from the data array as props
+    /* optional values:
+    mobileWidth: // breakpoint for switching to mobile view
+    justifyOnMobile: // pass true to switch to a list instead of a grid on mobile.
+    elementMobileHeight: // element height to use for mobile view
+    elementMobileWidth: // element width to use for mobile view when `justifyOnMobile === false`
+    scrollDelta: // Number of pixels from the top of the page to where React-Infinity is placed.
+    */
   })
 //...
 
@@ -45,34 +51,63 @@ The props are fairly straightforward.
 
 **data** *array*
 
-This is the data on which the content is based. It should be an array of objects that can have any data that your application may require and will be passed in to the childComponent that you pass in to render.
+This is the data on which the content is based. It should be an array of objects that can have any data that your application may require and will be passed in to the childComponent as props that you pass in to render.
 
 The only manadatory property of each object in data is an id field which is unique.
 
 **elementWidth** *number*
 
-Width of each element in pixels
+Width of each element in pixels for desktop view.
 
 **elementHeight** *number*
 
-Height of each element in pixels
+Height of each element in pixels for desktop view
 
 **margin** *number*
 
-margin between the elements
+margin between the elements. This is both the vertical and horizontal margin. v2.0 will bring more flexibility
 
-**childComponent** *React Component*
+**childComponent** *React Class*
 
 This is the react component that is responsible for rendering each object in the data array. This can be any component and will receive the data you pass in. You are responsible for making sure that it renders in way that it conforms to size you have provided.
 
-**transitionableName** *string*
+**transitionable** *instanceof Infinity.Transitionable*
 
-As a temporary measure, you must create a transitionable by using the provided TransitionableBank, and pass it's name. You must then keep the value of the transitionable up-to date with the correct scrollTop value in pixels. The component will pull the correct transitionable from the Transitionable Bank, and do the rest. This will soon be replaced with a scrollTop property that will accept a whole range of different types of values:
+React-Inifinity tracks window resizing on its own. But it does not track scrolling. This is done to be able to support elements with `overflow: scroll` in addition to just `window.onscroll`.
 
-(This is important to get the scroll position of the containing element. This could be the `window` object, or any other DOM element whose scroll position can be tracked to render the correct elements of the collection.
-It can also be a famo.us transitionable. This way you can use custom scrolling libraries on touch screens like scrollability or iscroll and provide the scrollTop data even though no actual element is actually scrolling.)
+So in order to update React-Infinity, you must pass in a Transitionable, and set the new scrollTop value on it on scroll events.
 
-There are more properties that you can pass in to customize the behaviour, such as a different size options for a mobile view and what the break point of that should be. Also, you can change the default behaviour from a vertical to horizontal scroll. Those properties are currently in flux and will be added soon in the future. Complete API and code examples will be added soon.
+Here is a quick example:
+
+```
+var Infinity = require('react-infinity')
+var Transitionable = Infinity.Transitionable;
+
+React.createClass({
+  getInitialState: function(){
+    transitionable: new Transitionable(0)
+  },
+  componentDidMount: function(){
+    window.addEventListener('scroll', this.onScroll)
+  },
+  onScroll: function(){
+    transitionable.set(window.scrollY)
+  },
+  componentWillUnmount: function(){
+    window.removeEventListener('scroll', this.onScroll)
+  },
+  render: function(){
+    return <Infinity {...otherProps} transitionable={this.state.transitionable} />
+  }
+})
+
+```
+In this case we are tracking the scroll position of window, but you can easily switch `window` for some other DOM element that is a container of React-Infinity.
+
+It is obvious to me that this pattern is common enough that it should be default behaviour, but I'm focussing on v2.0 now, and that will have a much better API.
+v1.0 is only getting basic support and bug-fixes at this point.
+
+
 
 ## Example
 

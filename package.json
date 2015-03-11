@@ -1,6 +1,6 @@
 {
   "name": "react-infinity",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "an implementation of the UITableView from iOS for the web",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,8 @@
   },
   "homepage": "https://github.com/naman34/react-infinity",
   "dependencies": {
-    "famous": "^0.2.2",
-    "react-prefixr": "0.0.3"
+    "famous": "0.2.2",
+    "react-prefixr": "0.0.3",
+    "react": ">=0.12.0"
   }
 }
