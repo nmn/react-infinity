@@ -71,42 +71,6 @@ margin between the elements. This is both the vertical and horizontal margin. v2
 
 This is the react component that is responsible for rendering each object in the data array. This can be any component and will receive the data you pass in. You are responsible for making sure that it renders in way that it conforms to size you have provided.
 
-**transitionable** *instanceof Infinity.Transitionable*
-
-React-Inifinity tracks window resizing on its own. But it does not track scrolling. This is done to be able to support elements with `overflow: scroll` in addition to just `window.onscroll`.
-
-So in order to update React-Infinity, you must pass in a Transitionable, and set the new scrollTop value on it on scroll events.
-
-Here is a quick example:
-
-```
-var Infinity = require('react-infinity')
-var Transitionable = Infinity.Transitionable;
-
-React.createClass({
-  getInitialState: function(){
-    transitionable: new Transitionable(0)
-  },
-  componentDidMount: function(){
-    window.addEventListener('scroll', this.onScroll)
-  },
-  onScroll: function(){
-    transitionable.set(window.scrollY)
-  },
-  componentWillUnmount: function(){
-    window.removeEventListener('scroll', this.onScroll)
-  },
-  render: function(){
-    return <Infinity {...otherProps} transitionable={this.state.transitionable} />
-  }
-})
-
-```
-In this case we are tracking the scroll position of window, but you can easily switch `window` for some other DOM element that is a container of React-Infinity.
-
-It is obvious to me that this pattern is common enough that it should be default behaviour, but I'm focussing on v2.0 now, and that will have a much better API.
-v1.0 is only getting basic support and bug-fixes at this point.
-
 
 
 ## Example
