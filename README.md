@@ -24,16 +24,18 @@ I have tried to design an API that requires the minimum possible options to work
 
 The basic props for React Inifinity
 
-```
+```js
 
 var Infinity = require('react-infinity');
 
 // ...
-  Infinite({data: data, //Array of objects.
+  Infinite({
+    data: data, //Array of objects.
     elementWidth: 300, // Width of one element
     elementHeight: 300, // height of one element
     margin: 300,
     childComponent: ArticleCard, // React Class that will render actual cards. Must accept one object from the data array as props
+
     /* optional values:
     transitionable: // an object of type famous.Transitionable. transitionable.get() will replace window.scrollY
     mobileWidth: // breakpoint for switching to mobile view
@@ -44,7 +46,6 @@ var Infinity = require('react-infinity');
     */
   })
 //...
-
 
 ```
 
