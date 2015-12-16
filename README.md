@@ -29,7 +29,7 @@ The basic props for React Inifinity
 var Infinity = require('react-infinity');
 
 // ...
-  Infinite({
+  Infinity({
     data: data, //Array of objects.
     elementWidth: 300, // Width of one element
     elementHeight: 300, // height of one element
