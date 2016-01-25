@@ -1,6 +1,5 @@
 'use strict';
 
-var s = require('react-prefixr');
 var React = require('react');
 var TransitionGroup = React.createFactory(require('react-addons-transition-group'));
 
@@ -120,7 +119,7 @@ var Infinite = React.createClass({
         this.setState({scrollTop: scrollTop});
       }
     }
-    
+
 
   },
 
