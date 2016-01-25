@@ -31,6 +31,7 @@
   "homepage": "https://github.com/naman34/react-infinity",
   "dependencies": {
     "famous": "^0.3.1",
-    "react-prefixr": "0.0.3"
+    "react-prefixr": "0.0.3",
+    "react-addons-transition-group": "^0.14.6"
   }
 }

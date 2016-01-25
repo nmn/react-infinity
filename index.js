@@ -1,8 +1,7 @@
 'use strict';
 
-var s = require('react-prefixr');
-var React = require('react/addons');
-var TransitionGroup = React.addons.TransitionGroup;
+var React = require('react');
+var TransitionGroup = React.createFactory(require('react-addons-transition-group'));
 
 var Transitionable = require('./TransitionableBank');
 var RAFList = require('./RAFList');
@@ -120,7 +119,7 @@ var Infinite = React.createClass({
         this.setState({scrollTop: scrollTop});
       }
     }
-    
+
 
   },
 
@@ -253,7 +252,7 @@ var Infinite = React.createClass({
       console.warn('the prop `direction` must be either "vertical" or "horizontal". It is set to', this.props.direction);
       return this.vertical();
     }
-    
+
   }
 
 });
