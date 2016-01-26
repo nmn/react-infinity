@@ -161,8 +161,9 @@ var Infinite = React.createClass({
       if(index >= lowerLimit && index < higherLimit){
         var column = index % elementsPerRow;
         var row = Math.floor(index / elementsPerRow);
+        var id = obj.id != null ? obj.id : obj._id;
         elementsToRender.push(SubContainer({
-          key: obj.id || obj._id,
+          key: id,
           transform: 'translate('+ (offset + column * (elementWidth + margin))  +'px, '+ (margin + row * (elementHeight + margin)) +'px)',
           width: elementWidth + 'px',
           height: elementHeight + 'px',
