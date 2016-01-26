@@ -81,7 +81,6 @@ var Infinite = React.createClass({
       windowWidth: this.props.windowWidth || 800,
       windowHeight: this.props.windowHeight || 600,
       loaded: false,
-      scrollDelta: 0,
       extra: {
         count: 0
       }
@@ -148,7 +147,7 @@ var Infinite = React.createClass({
     var offset = this.props.align === 'left' ? 0 :
                  this.props.align === 'center' ? Math.round(extraSpace/2) : extraSpace;
 
-    var scrollTop = this.state.scrollTop - this.state.scrollDelta;
+    var scrollTop = this.state.scrollTop - this.props.scrollDelta;
     var rowsAbove = Math.floor((scrollTop - margin) / (elementHeight + margin));
     var visibleRows = Math.ceil(((rowsAbove * (elementHeight + margin)) + windowHeight)/(elementHeight+margin));
 
@@ -199,7 +198,7 @@ var Infinite = React.createClass({
     var offset = this.props.align === 'left' ? 0 :
                  this.props.align === 'center' ? Math.round(extraSpace/2) : extraSpace;
 
-    var scrollLeft = this.state.scrollTop - this.state.scrollDelta;
+    var scrollLeft = this.state.scrollTop - this.props.scrollDelta;
     var columnsToLeft = Math.floor((scrollLeft - margin) / (elementHeight + margin));
     var visibleColumns = Math.ceil(((columnsToLeft * (elementWidth + margin)) + windowWidth)/(elementWidth + margin));
 
@@ -250,7 +249,7 @@ var Infinite = React.createClass({
       console.warn('the prop `direction` must be either "vertical" or "horizontal". It is set to', this.props.direction);
       return this.vertical();
     }
-    
+
   }
 
 });
