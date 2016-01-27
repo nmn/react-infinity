@@ -72,7 +72,8 @@ var Infinite = React.createClass({
     elementMobileWidth: React.PropTypes.number,
     margin: React.PropTypes.number,
     justifyOnMobile: React.PropTypes.bool,
-    preRender: React.PropTypes.bool
+    preRender: React.PropTypes.bool,
+    scrollDelta: React.PropTypes.number,
   },
 
   getInitialState: function () {
