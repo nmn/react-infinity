@@ -22,7 +22,7 @@ React Infinity solves more than one problem. Inspired by the animations of Metaf
 
 I have tried to design an API that requires the minimum possible options to work, with sensible defaults, but when you do want, everything is extremely customisable. Also, standing on the strengths of React, there are no options to change data. Anytime, something changes, you can just re-render the React Infinity Component with it.
 
-The basic props for React Inifinity
+The basic props for React Infinity
 
 ```js
 
