@@ -1,5 +1,5 @@
 var s = require('react-prefixr');
-var React = require('react/addons');
+var React = require('react');
 
 var SubContainer = React.createClass({
   displayName: 'Sub-Infinity',

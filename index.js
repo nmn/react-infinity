@@ -1,7 +1,7 @@
 'use strict';
 
-var React = require('react/addons');
-var TransitionGroup = React.createFactory(React.addons.TransitionGroup);
+var React = require('react');
+var TransitionGroup = React.createFactory(require('react-addons-transition-group'));
 
 var RAFList = require('./RAFList');
 
